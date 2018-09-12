@@ -7,9 +7,11 @@ class App extends Component {
   constructor() {
     super()
     this.state = {
-      activated: false
+      activated: false,
+      name: ''
     }
     this.toggleActivation = this.toggleActivation.bind(this)
+    this.handleChange = this.handleChange.bind(this)
   }
 
   toggleActivation() {
@@ -20,16 +22,28 @@ class App extends Component {
     }
   }
 
+  handleChange(e) {
+    console.log(e.target.value)
+    this.setState({ name: e.target.value })
+  }
+
 
   render() {
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Welcome{this.state.name.length > 1 ? `, ${this.state.name}` : `!` } </h1>
         </header>
-        <button onClick={this.toggleActivation}>Toggle Konami Code!</button>
-        {this.state.activated ? <Konami name="Andres" /> : <div>Konami Code: Deactivated</div>}
+
+        <input type="text" onChange={this.handleChange} placeholder="Your Name" />
+
+        <div className="konami">
+          <button onClick={this.toggleActivation}>Toggle Konami Code!</button>
+          {this.state.activated ? <Konami name={this.state.name} /> : <div>Konami Code: Deactivated</div>}
+
+        </div>
+
       </div>
     );
   }
